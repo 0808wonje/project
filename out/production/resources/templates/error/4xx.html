@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>잘못된 요청</title>
+</head>
+<body>
+<h1>잘못된 요청입니다</h1>
+<ul>
+  <li>오류 정보</li>
+  <ul>
+    <li th:text="|timestamp: ${timestamp}|"></li>
+    <li th:text="|path: ${path}|"></li>
+    <li th:text="|status: ${status}|"></li>
+    <li th:text="|error: ${error}|"></li>
+  </ul>
+</ul>
+</body>
+</html>

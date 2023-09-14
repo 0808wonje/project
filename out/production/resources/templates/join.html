@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div th:replace="~{fragment/header :: titleHead}"></div>
+
+<div class="container text-center">
+  <form th:action method="post" th:object="${memberForm}">
+
+    <div class="form-floating mb-3">
+      <input class="form-control" type="text" th:field="*{loginId}"
+             th:errorclass="is-invalid" placeholder="아이디를 입력하세요">
+      <div th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</div>
+      <div th:errors="*{loginId}" th:errorclass="invalid-feedback">아이디를 입력해야합니다</div>
+      <label for="loginId">로그인에 사용할 아이디를 입력하세요</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control" type="text" th:field="*{nickname}"
+             th:errorclass="is-invalid" placeholder="닉네임을 입력하세요">
+      <div th:errors="*{nickname}" th:errorclass="invalid-feedback">닉네임을 입력해야합니다</div>
+      <label for="nickname">닉네임을 입력하세요</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control" type="password" th:field="*{password}"
+             th:errorclass="is-invalid" placeholder="비밀번호 입력하세요">
+      <div th:errors="*{password}" th:errorclass="invalid-feedback">비밀번호를 입력해야합니다</div>
+      <label for="password">비밀번호 입력하세요</label>
+    </div>
+
+    <div class="mb-3" th:with="regs = ${regions}">
+      <select class="form-select form-select-lg mb-3" aria-label="form-select-lg" th:field="*{district}" th:errorclass="is-invalid">
+        <option value="" selected th:text="'거주지역을 선택하세요'">지역</option>
+        <option th:each="region : ${regs}" th:value="${region}" th:text="${region.name()}" >지역</option>
+      </select>
+      <div th:errors="*{district}" th:errorclass="invalid-feedback">거주지역을 입력해야합니다</div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control" type="text" th:field="*{street}"
+             th:errorclass="is-invalid" placeholder="주소지를 입력하세요">
+      <div th:errors="*{street}" th:errorclass="invalid-feedback">도로명을 입력해야합니다</div>
+      <label for="address">도로명을 입력하세요</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control" type="text" th:field="*{details}" placeholder="주소지를 입력하세요">
+      <label for="address">상세주소를 입력하세요</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control" type="text" th:field="*{phoneNumber}"
+             th:errorclass="is-invalid" placeholder="전화번호를 입력하세요">
+      <div th:errors="*{phoneNumber}" th:errorclass="invalid-feedback">전화번호를 입력해야합니다</div>
+      <label for="phoneNumber">전화번호를 입력하세요</label>
+    </div>
+
+    <button class="btn btn-dark btn-lg" type="submit">회원가입</button>
+  </form>
+</div>
+
+</body>
+</html>

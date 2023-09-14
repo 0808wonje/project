@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title th:text="#{page.itemList}">Main Home</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+  </head>
+  <body th:object="${member}">
+    <div th:if="!(${member})">
+      <div th:replace="~{fragment/header :: titleHead}">not login fragment</div>
+    </div>
+    <div th:if="${member}">
+      <div th:replace="~{fragment/loginHeader :: memberHead (${member})}">login fragment</div>
+    </div>
+
+    <div class="container text-center">
+
+      <form th:action method="get" th:object="${itemSearchCondition}">
+        <div id="search-condition" class="row align-items-start row mb-3">
+          <div class="form-floating col-2">
+            <input type="text" placeholder="판매자" class="form-control" th:field="*{searchUserNickname}">
+            <label for="searchUserNickname" th:text="#{searchCondition.seller}">판매자</label>
+          </div>
+
+          <div class="col-2">
+            <select class="form-select form-select-lg mb-3" aria-label="form-select-lg" th:field="${itemSearchCondition.district}" th:object="${regions}">
+              <option value="" selected th:text="#{searchCondition.district}">판매지역</option>
+              <option th:each="region : ${regions}" th:value="${region}" th:text="${region.name()}" >지역</option>
+            </select>
+          </div>
+
+          <div class="form-floating col-3">
+            <input type="text" placeholder="검색할 상품명을 입력하세요" class="form-control" th:field="*{searchItemName}">
+            <label for="searchItem" th:text="#{searchCondition.itemName}">검색할 상품명을 입력하세요</label>
+          </div>
+
+          <div class="form-floating col-2">
+            <input type="text" placeholder="최소 금액" class="form-control" th:field="*{minPrice}">
+            <label for="minPrice" th:text="#{searchCondition.minPrice}">최소 금액</label>
+          </div>
+
+          <div class="form-floating col-2">
+            <input type="text" placeholder="최대금액" class="form-control" th:field="*{maxPrice}">
+            <label for="maxPrice" th:text="#{searchCondition.maxPrice}">최대 금액</label>
+          </div>
+
+          <div class="col">
+            <button type="submit" class="btn btn-lg btn-primary">검색</button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
+            <input th:checked="${sParam} eq 'newest'" type="radio" class="btn-check" id="newest" th:name="sortParam" th:value="'newest'" autocomplete="off">
+            <label class="btn btn-outline-primary" for="newest">최신순</label>
+
+            <input th:checked="${sParam} eq 'priceLowToHigh'" type="radio" class="btn-check" id="priceLowToHigh" th:name="sortParam" th:value="'priceLowToHigh'" autocomplete="off">
+            <label class="btn btn-outline-primary" for="priceLowToHigh">가격낮은순</label>
+
+            <input th:checked="${sParam} eq 'priceHighToLow'" type="radio" class="btn-check" id="priceHighToLow" th:name="sortParam" th:value="'priceHighToLow'" autocomplete="off">
+            <label class="btn btn-outline-primary" for="priceHighToLow">가격높은순</label>
+
+            <input th:checked="${sParam} eq 'mostComment'" type="radio" class="btn-check" id="mostComment" th:name="sortParam" th:value="'mostComment'" autocomplete="off">
+            <label class="btn btn-outline-primary" for="mostComment">댓글많은순</label>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <table class="table table-striped table-hover table-secondary table-borderless">
+            <tr>
+              <th th:text="#{label.item.thumbnail}">썸네일</th>
+              <th th:text="#{label.item.seller}">판매자</th>
+              <th th:text="#{label.item.region}">판매지역</th>
+              <th th:text="#{label.item.name}">상품명</th>
+              <th th:text="#{label.item.price}">가격</th>
+              <th th:text="#{label.item.quantity}">수량</th>
+            </tr>
+            <tr th:each="item : ${allItem}" th:onclick="|location.href='@{/item/itemInfo/{itemId} (itemId = ${item.id})}'|">
+              <td class="fs-3 fw-bold"><img th:if="${item.images.size()} gt 0" width="80px" height="80px" class="img-thumbnail img-fluid" th:src="|@{/images/{filename} (filename = ${item.images[0].serverFileName})}|"></td>
+              <td class="fs-3 fw-bold" th:text="${item.member.nickname}">판매자</td>
+              <td class="fs-3 fw-bold" th:text="${item.region}">판매지역</td>
+              <td class="fs-3 fw-bold" th:text="${item.itemName}">상품명</td>
+              <td class="fs-3 fw-bold" th:text="${item.formattedPrice}">가격</td>
+              <td class="fs-3 fw-bold" th:text="${item.formattedQuantity}">수량</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="row align-items-center">
+          <nav aria-label="Page navigation">
+            <ul class="pagination pagination-lg justify-content-center">
+              <li class="page-item" th:classappend="!(${page.hasPrevious()}) ? 'disabled'">
+                <button type="submit" class="page-link" th:value="0" name="page">First</button>
+              </li>
+              <li class="page-item" th:classappend="!(${page.hasPrevious()}) ? 'disabled'">
+                <button type="submit" name="page" th:value="${page.number-1}" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></button>
+              </li>
+              <li class="page-item" th:each="p: ${#numbers.sequence(0, page.totalPages-1)}" th:classappend="${p == page.number} ? 'active'" th:if="${p ge page.number-5 and p le page.number+5}">
+                <button type="submit" name="page" class="page-link" th:value="${p}" th:text="${p}+1"></button>
+              </li>
+              <li class="page-item" th:classappend="!(${page.hasNext()}) ? 'disabled'">
+                <button type="submit" name="page" class="page-link" th:value="${page.number+1}" aria-label="Next"><span aria-hidden="true">&raquo;</span></button>
+              </li>
+              <li class="page-item" th:classappend="!(${page.hasNext()}) ? 'disabled'">
+                <button type="submit" name="page" class="page-link" th:value="${page.totalPages-1}">Last</button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+      </form>
+    </div>
+
+</body>
+</html>

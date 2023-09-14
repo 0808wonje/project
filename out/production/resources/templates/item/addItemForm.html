@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{page.addItem}">상품등록</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body th:object="${itemForm}">
+<div th:replace="~{fragment/loginHeader :: memberHead (${member})}"></div>
+
+<div class="container text-center">
+  <p class="fs-2" th:text="#{page.addItem}">등록</p>
+
+  <form th:action method="post" enctype="multipart/form-data">
+    <div class="form-floating mb-3">
+      <input class="form-control" type="text" th:field="*{itemName}" th:errorclass="is-invalid" placeholder="상품이름">
+      <div th:errors="*{itemName}" th:errorclass="invalid-feedback"></div>
+      <label for="itemName" th:text="#{label.item.name}">상품이름</label>
+    </div>
+
+    <select class="form-select form-select-lg mb-3" aria-la록bel=".form-select-lg example" th:field="${itemForm.salesRegion}" th:object="${regions}" th:errorclass="is-invalid">
+      <option value="" selected th:text="#{label.item.region}">판매 지역을 선택하세요</option>
+      <option th:each="region : ${regions}" th:value="${region}" th:text="${region.name()}" >지역</option>
+    </select>
+    <div th:errors="${itemForm.salesRegion}" th:errorclass="invalid-feedback"></div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control" type="text" th:field="*{price}" th:errorclass="is-invalid" placeholder="상품가격">
+      <div th:errors="*{price}" th:errorclass="invalid-feedback"></div>
+      <label for="price" th:text="#{label.item.price}">상품가격</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control" type="text" th:field="*{quantity}" th:errorclass="is-invalid" placeholder="수량">
+      <div th:errors="*{quantity}" th:errorclass="invalid-feedback"></div>
+      <label for="quantity" th:text="#{label.item.quantity}">수량</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <textarea class="form-control" th:field="*{description}" placeholder="상품 상세정보" style="resize:none; height:200px"></textarea>
+      <label for="description" th:text="#{label.item.description}">상품 상세정보</label>
+    </div>
+
+    <input type="file" class="form-control mb-3" th:field="*{images}" multiple>
+
+    <button class="btn btn-success btn-lg" type="submit" th:text="#{button.save.item}">등록</button>
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head >
+  <meta charset="UTF-8">
+</head>
+<body >
+  <div th:fragment="titleHead" class="mb-5">
+    <div class="bg-dark bg-gradient">
+      <p class="fs-1 fw-bold"><a href="/" class="text-white text-decoration-none ms-5">Free Market</a></p>
+    </div>
+    <div class="container">
+      <button type="button" class="btn btn-dark btn-lg" th:onclick="|location.href='@{/login}'|">로그인</button>
+      <button type="button" class="btn btn-dark btn-lg" th:onclick="|location.href='@{/join}'|">회원가입</button>
+      <button type="button" class="btn btn-dark btn-lg" th:onclick="|location.href='@{/item/additem}'|">상품등록</button>
+    </div>
+  </div>
+</body>
+

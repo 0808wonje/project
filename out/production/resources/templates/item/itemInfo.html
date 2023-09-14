@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{page.itemInfo}">상품정보</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body th:object="${item}">
+
+<div th:if="${member}" >
+  <div th:replace="~{fragment/loginHeader :: memberHead (${member})}"></div>
+</div>
+<div th:if="!(${member})">
+  <div th:replace="~{fragment/header :: titleHead}"></div>
+</div>
+
+<div class="container text-center">
+  <p class="fs-2" th:text="#{page.itemInfo}">상품정보</p>
+  <form th:action method="post">
+    <div class="mb-3 row ">
+      <p th:text="#{label.item.registerDate}">등록일</p>
+      <p th:field="*{createdTime}" th:text="${{item.createdTime}}"></p>
+    </div>
+    <div class="mb-3 row">
+      <label for="itemName" class="col-form-label col-sm-2 fs-4" th:text="#{label.item.name}">상품명</label>
+      <div class="col-sm-10">
+        <input type="text" th:field="*{itemName}" class="form-control" readonly>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="price" class="col-form-label col-sm-2 fs-4" th:text="#{label.item.price}">가격</label>
+      <div class="col-sm-10">
+        <input type="text" th:field="*{price}" class="form-control" readonly>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="quantity" class="col-form-label col-sm-2 fs-4" th:text="#{label.item.quantity}">수량</label>
+      <div class="col-sm-10">
+          <input type="text" th:field="*{quantity}" class="form-control" readonly>
+      </div>
+    </div>
+
+    <div class="mb-3 row" th:if="${item.images}">
+      <tr>
+        <td><img  th:each="img : *{images}" class="mb-3"
+                  th:src="${img} ? |@{/images/{filename} (filename = ${img.serverFileName})}| : _" width="500px"></td>
+      </tr>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="description" class="col-form-label col-sm-2 fs-4" th:text="#{label.item.description}">상품설명</label>
+      <div class="col-sm-10">
+        <textarea th:field="*{description}" class="form-control" readonly style="resize:none; height:200px"></textarea>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <table class="table table-striped table-hover table-primary table-borderless">
+        <tr>
+          <th>댓글등록일</th>
+          <th>유저</th>
+          <th>내용</th>
+        </tr>
+        <tr th:each="comment : *{comments}">
+          <td th:text="${{comment.member.createdTime}}">댓글등록일</td>
+          <td th:text="${comment.member.nickname}">유저</td>
+          <td th:text="${comment.comment}">댓글</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="form-floating mb-3 row" th:object="${itemCommentForm}">
+      <div class="col">
+        <input th:disabled="!(${member}) ? 'disabled'" type="text" class="form-control" th:placeholder="${member} ? '댓글을 입력하세요' : '로그인 후 작성할 수 있습니다'" th:field="*{comment}" th:errorclass="is-invalid">
+        <div th:errors="*{comment}" th:errorclass="invalid-feedback"></div>
+        <label for="comment"></label>
+      </div>
+      <div class="col-md-2">
+        <button th:disabled="!(${member}) ? 'disabled'" class="btn btn-primary btn-lg" th:formaction="|/item/addComment/${item.id}|" type="submit">댓글등록</button>
+      </div>
+    </div>
+
+    <div class="mb-3 row" th:object="${createOrderForm}">
+      <div class="col">
+        <select th:disabled="!(${member}) ? 'disabled'" class="form-select" th:object="${shippingWays}" th:field="${createOrderForm.shippingMethod}" th:errorclass="is-invalid">
+          <option value="" selected th:text="${member} ? #{label.item.shippingMethod} : '로그인 후 주문할 수 있습니다'">배송방식</option>
+          <option th:each="shippingWay : ${shippingWays}" th:value="${shippingWay}" th:text="${shippingWay.getLabel()}">배송방식</option>
+        </select>
+        <div th:errors="${createOrderForm.shippingMethod}" th:errorclass="invalid-feedback"></div>
+      </div>
+
+      <div class="col-md-2">
+        <button th:disabled="${item.order} or !(${member}) ? 'disabled'" th:text="${item.order} ? '주문완료' : '주문요청'" class="btn btn-primary btn-lg" type="submit" th:formaction="|/item/createOrder/${item.id}|">주문요청</button>
+      </div>
+        <p th:if="${param.selfOrder}">자신의 상품은 주문할 수 없습니다</p>
+    </div>
+    <button class="btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/}'|">목록으로</button>
+  </form>
+</div>
+</body>
+</html>
