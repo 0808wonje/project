@@ -19,7 +19,7 @@
         <tr>
           <th th:text="#{label.item.thumbnail}">썸네일</th>
           <th th:text="#{label.item.name}">주문 상품</th>
-          <th th:text="#{label.order.orderDate}">주문일</th>
+          <th th:text="#{label.order.createdTime}">주문일</th>
           <th th:text="#{label.item.shippingMethod}">배송 방식</th>
           <th th:text="#{label.item.itemStatus}">상태</th>
           <th></th>
@@ -27,7 +27,7 @@
         <tr th:each="order : ${orders}">
           <td class="fs-3 fw-bold" th:onclick="|location.href='@{/item/itemInfo/{itemId} (itemId = ${order.item.id})}'|"><img th:if="${order.item.images.size()} gt 0" width="80px" height="80px" class="img-thumbnail img-fluid" th:src="|@{/images/{filename} (filename = ${order.item.images[0].serverFileName})}|"></td>
           <td class="fs-3 fw-bold" text="주문 상품" th:text="${order.item.itemName}" th:onclick="|location.href='@{/item/itemInfo/{itemId} (itemId = ${order.item.id})}'|"></td>
-          <td class="fs-3 fw-bold" text="주문일" th:text="${{order.orderDate}}" th:onclick="|location.href='@{/item/itemInfo/{itemId} (itemId = ${order.item.id})}'|"></td>
+          <td class="fs-3 fw-bold" text="주문일" th:text="${{order.createdTime}}" th:onclick="|location.href='@{/item/itemInfo/{itemId} (itemId = ${order.item.id})}'|"></td>
           <td class="fs-3 fw-bold" text="배송 방식" th:text="${order.shippingMethod.getLabel()}" th:onclick="|location.href='@{/item/itemInfo/{itemId} (itemId = ${order.item.id})}'|"></td>
           <td class="fs-3 fw-bold" text="상태" th:text="${order.item.itemStatus.getLabel()}" th:onclick="|location.href='@{/item/itemInfo/{itemId} (itemId = ${order.item.id})}'|"></td>
           <td class="fs-3 fw-bold"><button type="submit" name="cancel-order" th:value="${order.id}" class="btn btn-danger btn-lg" th:disabled="${order.item.itemStatus} neq ${statusREQUEST} ? 'disabled'">주문취소</button></td>

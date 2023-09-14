@@ -124,12 +124,13 @@ public class MemberController {
   // 개별 아이템 수정
   @PostMapping("/myItems/edit/{itemId}")
   public String itemUpdate(@PathVariable Long itemId,
-                           @Validated @ModelAttribute ItemUpdateForm itemUpdateForm, BindingResult bindingResult,
+                           @Validated @ModelAttribute ItemUpdateForm itemUpdateForm, BindingResult bindingResult1,
+                           @ModelAttribute ItemCommentForm itemCommentForm, BindingResult bindingResult2,
                            Model model, RedirectAttributes redirectAttributes) throws IOException {
     Item item = itemService.findOneItem(itemId);
 
     // ItemUpdateForm 확인
-    if (bindingResult.hasErrors()) {
+    if (bindingResult1.hasErrors()) {
       model.addAttribute("member", item.getMember());
       model.addAttribute("item", item);
       model.addAttribute("regions", Region.values());

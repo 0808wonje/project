@@ -31,8 +31,8 @@ public class TestInit {
   @PostConstruct
   public void init() {
 
-    Member member1 = createMember("userA", "짱구", "1234", new Address(Region.서울특별시, "강남구 청담동"), "010-1234-5678");
-    Member member2 = createMember("userB", "철수", "5678", new Address(Region.경기도, "분당구 야탑동"), "010-4321-8765");
+    Member member1 = createMember("userA", "고객1", "1234", new Address(Region.서울특별시, "강남구 청담동"), "010-1234-5678");
+    Member member2 = createMember("userB", "고객2", "5678", new Address(Region.경기도, "성남시 분당구 야탑동"), "010-4321-8765");
 
     memberRepository.save(member1);
     memberRepository.save(member2);
