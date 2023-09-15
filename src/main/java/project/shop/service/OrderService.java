@@ -32,10 +32,12 @@ public class OrderService {
     orderRepository.deleteById(orderId);
   }
 
+  // API용 주문조회 메서드 (주문만 출력)
   public List<Order> findAllOrderForApi() {
     return orderQueryRepository.findAllOrderForApi();
   }
 
+  // API용 주문조회 메서드 (주문+멤버 출력)
   public List<Order> findMembersAllOrder(Long memberId) {
     return orderQueryRepository.findMembersAllOrder(memberId);
   }

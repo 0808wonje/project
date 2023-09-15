@@ -39,6 +39,7 @@ public class MemberService {
     return memberRepository.findAll();
   }
 
+  // 로그인
   public Member login(String loginId, String password) {
     Optional<Member> member = memberRepository.findByLoginId(loginId).filter(m -> m.getPassword().equals(password));
     if (member.isPresent()) {
@@ -48,6 +49,7 @@ public class MemberService {
     }
   }
 
+  // 중복 loginId 검사
   public void checkDuplicateLoginId(String loginId) {
     memberRepository.findByLoginId(loginId).ifPresent(
       member -> {
@@ -56,6 +58,7 @@ public class MemberService {
     );
   }
 
+  // 멤버 수정
   @Transactional
   public void updateMember(Long memberId, MemberUpdateForm memberUpdateForm) {
     memberRepository.findById(memberId).ifPresent(m -> {
@@ -64,6 +67,7 @@ public class MemberService {
     });
   }
 
+  // 멤버 삭제
   @Transactional
   public void deleteMember(Member member) {
     memberRepository.deleteById(member.getId());

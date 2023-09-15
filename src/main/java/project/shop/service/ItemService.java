@@ -57,10 +57,12 @@ public class ItemService {
     return itemRepository.findAllByCondition(itemSearchCondition, sortCondition, pageable);
   }
 
+  // API 전용 조회 메서드
   public List<Item> findAllItemForApi() {
     return itemQueryRepository.findAllItemForApi();
   }
 
+  // 아이템 수정
   @Transactional
   public void updateItem(Long itemId, ItemUpdateForm itemUpdateForm) throws IOException {
     itemRepository.findById(itemId).ifPresent(i -> i.updateItem(
