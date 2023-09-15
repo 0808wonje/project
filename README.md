@@ -58,7 +58,7 @@
 <img src="./src/main/resources/static/images/requestOrder.gif"><br>
 
 ## 거래수락
-<img src="./src/main/resources/static/images/acceptOrder.gif" width="600" height="650">&nbsp;<img src="./src/main/resources/static/images/acceptOrder2.gif" width="650" height="700"><br>
+<img src="./src/main/resources/static/images/acceptOrder.gif">&nbsp;<img src="./src/main/resources/static/images/acceptOrder2.gif"><br>
 
 ## 거래완료
 <img src="./src/main/resources/static/images/completeOrder.gif"><br>
