@@ -44,3 +44,21 @@
 <img src="./src/main/resources/static/images/JoinFlowChart.svg"><br>
 <img src="./src/main/resources/static/images/AddItemFlowChart.svg"><br>
 <img src="./src/main/resources/static/images/CreateOrderFlowChart.svg"><br>
+
+---
+
+# WEB
+## 검색 필터링
+<img src="./src/main/resources/static/images/search.gif"><br>
+
+## 상품등록
+<img src="./src/main/resources/static/images/addItem.gif"><br>
+
+## 주문요청
+<img src="./src/main/resources/static/images/requestOrder.gif"><br>
+
+## 거래수락
+<img src="./src/main/resources/static/images/acceptOrder.gif" width="600" height="650">&nbsp;<img src="./src/main/resources/static/images/acceptOrder2.gif" width="650" height="700"><br>
+
+## 거래완료
+<img src="./src/main/resources/static/images/completeOrder.gif"><br>
