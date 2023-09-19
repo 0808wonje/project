@@ -13,11 +13,10 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 1000
-        # show_sql: true  이 속성은 system.out.println으로 남기때문에 되도록 쓰지않고 로그로 남기는것이 좋다
         format_sql: true
 logging.level:
-  org.hibernate.SQL: debug # jpa나 hibernate가 생성하는 모든 SQL이 로그로 남는다
-  org.hibernate.type: trace # 로그에 남는 SQL의 쿼리 파라미터를 보여준다 (이게 없으면 ?로 보임)
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
   org.springframework.jdbc: debug
 file:
   path: /Users/wj/FileUploadPractice/
