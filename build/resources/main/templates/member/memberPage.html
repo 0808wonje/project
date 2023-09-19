@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{page.memberPage}">마이페이지</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body th:object="${member}">
+  <div th:replace="~{fragment/loginHeader :: memberHead (${member})}"></div>
+  <div class="container text-center">
+    <p th:if="${param.updated}">변경이 완료되었습니다</p>
+    <form th:action method="post">
+      <div class="mb-3 row">
+        <label class="col-form-label col-sm-2 fs-5" for="nickname" th:text="#{member.nickname}">닉네임</label>
+        <div class="col-sm-10">
+          <input type="text" th:field="*{nickname}" class="form-control" disabled>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-form-label col-sm-2 fs-5" for="password" th:text="#{member.password}">비밀번호</label>
+        <div class="col-sm-10">
+          <input type="password" th:field="*{password}" class="form-control" disabled>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-form-label col-sm-2 fs-5" for="address" th:text="#{member.region}">거주지역</label>
+        <div class="col-sm-10">
+          <input type="text" th:field="*{address.district}" class="form-control" disabled>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-form-label col-sm-2 fs-5" for="address" th:text="#{member.street}">도로명</label>
+        <div class="col-sm-10">
+          <input type="text" th:field="*{address.street}" class="form-control" disabled>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-form-label col-sm-2 fs-5" for="address" th:text="#{member.details}">상세주소</label>
+        <div class="col-sm-10">
+          <input type="text" th:field="*{address.details}" class="form-control" disabled>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-form-label col-sm-2 fs-5" for="phoneNumber" th:text="#{member.phoneNumber}">전화번호</label>
+        <div class="col-sm-10">
+          <input type="text" th:field="*{phoneNumber}" class="form-control" readonly>
+        </div>
+      </div>
+
+      <button class="btn btn-secondary btn-lg" th:text="#{page.memberEditPage}" th:onclick="|location.href='@{/member/edit/{memberId} (memberId = ${member.id})}'|" type="button">개인정보수정</button>
+      <button class="btn btn-info btn-lg" th:text="#{page.memberItemPage}" th:onclick="|location.href='@{/member/myItems/{memberId} (memberId = ${member.id})}'|" type="button">내 상품</button>
+      <button class="btn btn-info btn-lg" th:text="#{page.myOrders}" th:onclick="|location.href='@{/member/myOrders/{memberId} (memberId = ${member.id})}'|" type="button">주문 정보</button>
+      <button class="btn btn-primary btn-lg" th:text="#{button.back}" type="button" th:onclick="|location.href='@{/}'|">목록으로</button>
+    </form>
+  </div>
+</body>
+</html>

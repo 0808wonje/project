@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+
+<div th:replace="~{fragment/header :: titleHead}"></div>
+
+
+<div class="container text-center">
+  <div th:if="${param.complete}">
+    <h3>회원가입이 완료되었습니다</h3>
+  </div>
+
+  <form method="post" th:action th:object="${loginForm}">
+    <div th:if="*{#fields.hasGlobalErrors()}">
+      <p class="error-field" th:each="err : ${#fields.globalErrors()}" th:text="${err} "></p>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control form-control-lg" type="text" th:field="*{loginId}" th:errorclass="is-invalid" placeholder="아이디를 입력하세요">
+      <div th:errors="*{loginId}" th:errorclass="invalid-feedback"></div>
+      <label for="loginId">아이디를 입력하세요</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control form-control-lg" type="password" th:field="*{password}" th:errorclass="is-invalid" placeholder="비밀번호를 입력하세요">
+      <div th:errors="*{password}" th:errorclass="invalid-feedback"></div>
+      <label for="password">비밀번호를 입력하세요</label>
+    </div>
+    <button class="btn btn-dark btn-lg" type="submit">로그인</button>
+  </form>
+</div>
+<div th:replace="~{fragment/footer :: copyright}"></div>
+</body>
+</html>
