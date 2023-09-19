@@ -1,17 +1,26 @@
 version: "24.0.6"
 services:
-  # 웹 애플리케이션 설정
-  web:
-    build: .
-  # 데이터베이스 설정
-  db:
+  shopapp:
+    image: shopapp
+    ports:
+      - "50000:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3305/mydatabase?autoReconnect=true&user=root&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME:
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5Dialect
+
+  mysql:
     image: mysql:latest
     environment:
+      MYSQL_USER:
       MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: mydatabase
       ports:
         "3305:3306"
-
-networks:
-# 네트워크 설정
-volumes:
-# 볼륨 설정
+      restart: always
+    volumes:
+      - db-data:/var/lib/mysql
