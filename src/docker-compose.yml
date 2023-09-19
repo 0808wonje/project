@@ -1,0 +1,17 @@
+version: "24.0.6"
+services:
+  # 웹 애플리케이션 설정
+  web:
+    build: .
+  # 데이터베이스 설정
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      ports:
+        "3305:3306"
+
+networks:
+# 네트워크 설정
+volumes:
+# 볼륨 설정
