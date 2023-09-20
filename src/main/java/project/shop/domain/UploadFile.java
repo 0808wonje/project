@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "originalFileName", "originalFileName"})
+@ToString(of = {"id", "originalFileName", "serverFileName"})
 public class UploadFile {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
